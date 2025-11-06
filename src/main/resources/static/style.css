@@ -1,0 +1,284 @@
+ * {
+ box-sizing: border-box;
+ font-family: 'Segoe UI', sans-serif;
+ margin: 0;
+ padding: 0;
+ transition: background 0.3s, color 0.3s;
+ }
+
+ body {
+ background-color: #111;
+ color: white;
+ overflow: hidden;
+ background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+ background-size: 40px 40px;
+ }
+
+ body.light {
+ background-color: #f2f2f2;
+ color: #111;
+ background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+ }
+
+ .topbar {
+ background: #e0e0e0;
+ color: #000;
+ text-align: left;
+ padding: 6px 12px;
+ font-weight: bold;
+ letter-spacing: 1px;
+ font-size: 18px;
+ text-shadow: 0 0 5px rgba(0,0,0,0.3);
+ }
+
+ body.light .topbar {
+ background: #111;
+ color: white;
+ text-shadow: 0 0 6px rgba(255,255,255,0.3);
+ }
+
+ .app {
+ display: flex;
+ height: calc(100vh - 30px);
+ overflow: hidden;
+ backdrop-filter: blur(4px);
+ }
+
+ .sidebar {
+ width: 260px;
+ background: rgba(24,24,24,0.9);
+ padding: 10px;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ }
+
+ body.light .sidebar {
+ background: rgba(230,230,230,0.9);
+ }
+
+ .sidebar h3 {
+ font-size: 13px;
+ color: #777;
+ margin-bottom: 5px;
+ }
+
+ .chat-item {
+ background: #2a2a2a;
+ height: 40px;
+ border-radius: 8px;
+ }
+
+ body.light .chat-item {
+ background: #bbb;
+ }
+
+ .chat {
+ flex: 1;
+ background: rgba(27,27,27,0.9);
+ display: flex;
+ flex-direction: column;
+ }
+
+ body.light .chat {
+ background: rgba(255,255,255,0.9);
+ }
+
+ .chat-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 10px;
+ padding: 10px 15px;
+ border-bottom: 1px solid #333;
+ background: rgba(16,16,16,0.9);
+ font-weight: bold;
+ }
+
+ body.light .chat-header {
+ background: rgba(245,245,245,0.9);
+ border-bottom: 1px solid #ccc;
+ }
+
+ .chat-header-left {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ }
+
+ .chat-header-left img {
+ width: 36px;
+ height: 36px;
+ border-radius: 50%;
+ }
+
+ .settings-btn {
+ background: none;
+ border: none;
+ cursor: pointer;
+ }
+
+ .settings-btn img {
+ width: 24px;
+ height: 24px;
+ filter: invert(1);
+ }
+
+ body.light .settings-btn img {
+ filter: invert(0);
+ }
+
+ .chat-body {
+ flex: 1;
+ padding: 20px;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ overflow-y: auto;
+ scroll-behavior: smooth;
+ }
+
+ .message {
+ max-width: 70%;
+ background: #333;
+ padding: 8px 12px;
+ border-radius: 10px;
+ font-size: 14px;
+ word-wrap: break-word;
+ }
+
+ .message.user {
+ align-self: flex-end;
+ background: #444;
+ }
+
+ .message.bot {
+ align-self: flex-start;
+ background: #2d2d2d;
+ color: #00d1ff;
+ }
+
+ body.light .message {
+ background: #ddd;
+ color: #000;
+ }
+
+ body.light .message.user {
+ background: #ccc;
+ }
+
+ body.light .message.bot {
+ background: #e0f6ff;
+ color: #0077b6;
+ }
+
+ .chat-input {
+ display: flex;
+ align-items: center;
+ padding: 10px;
+ background: #101010;
+ border-top: 1px solid #333;
+ position: sticky;
+ bottom: 0;
+ }
+
+ body.light .chat-input {
+ background: #f2f2f2;
+ border-top: 1px solid #ccc;
+ }
+
+ .chat-input input {
+ flex: 1;
+ background: #222;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 10px;
+ border-radius: 10px;
+ }
+
+ body.light .chat-input input {
+ background: #fff;
+ color: #111;
+ }
+
+ .chat-input button {
+ background: #333;
+ color: white;
+ border: none;
+ padding: 10px 15px;
+ margin-left: 8px;
+ border-radius: 8px;
+ cursor: pointer;
+ transition: 0.2s;
+ }
+
+ .chat-input button:hover {
+ background: #555;
+ }
+
+ body.light .chat-input button {
+ background: #ccc;
+ color: #000;
+ }
+
+ body.light .chat-input button:hover {
+ background: #bbb;
+ }
+
+ /* === Окно регистрации === */
+ .auth-container {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: rgba(0,0,0,0.9);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ z-index: 1000;
+ }
+
+ .auth-box {
+ background: #222;
+ padding: 30px;
+ border-radius: 12px;
+ width: 320px;
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ box-shadow: 0 0 15px rgba(0,0,0,0.5);
+ }
+
+ .auth-box h2 {
+ text-align: center;
+ margin-bottom: 10px;
+ }
+
+ .auth-box input {
+ background: #333;
+ border: none;
+ padding: 10px;
+ color: white;
+ border-radius: 8px;
+ }
+
+ .auth-box button {
+ background: #00aaff;
+ border: none;
+ color: white;
+ padding: 10px;
+ border-radius: 8px;
+ cursor: pointer;
+ transition: 0.3s;
+ }
+
+ .auth-box button:hover {
+ background: #0088cc;
+ }
+
+ .status {
+ font-size: 13px;
+ margin-top: -5px;
+ }
