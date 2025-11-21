@@ -1,5 +1,6 @@
 package com.discordclone.lingo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+     @Column(unique = true)   //username будет уникальным
     private String username;
+
+    @Column(unique = true)   //email будет уникальным
     private String email;
 
     public User() {}
@@ -24,6 +28,7 @@ public class User {
         this.email = email;
     }
 
+    // геттеры и сеттеры
     public Long getId() {
         return id;
     }

@@ -1,483 +1,53 @@
 <!doctype html>
 <html lang="ru">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Lingo</title>
- <style>
- * {
- box-sizing: border-box;
- font-family: 'Segoe UI', sans-serif;
- margin: 0;
- padding: 0;
- transition: background 0.3s, color 0.3s;
- }
-
- body {
- background-color: #111;
- color: white;
- overflow: hidden;
- background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
- background-size: 40px 40px;
- }
-
- body.light {
- background-color: #f2f2f2;
- color: #111;
- background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
- }
-
- .topbar {
- background: #e0e0e0;
- color: #000;
- text-align: left;
- padding: 6px 12px;
- font-weight: bold;
- letter-spacing: 1px;
- font-size: 18px;
- text-shadow: 0 0 5px rgba(0,0,0,0.3);
- }
-
- body.light .topbar {
- background: #111;
- color: white;
- text-shadow: 0 0 6px rgba(255,255,255,0.3);
- }
-
- .app {
- display: flex;
- height: calc(100vh - 30px);
- overflow: hidden;
- backdrop-filter: blur(4px);
- }
-
- .sidebar {
- width: 260px;
- background: rgba(24,24,24,0.9);
- padding: 10px;
- display: flex;
- flex-direction: column;
- gap: 10px;
- }
-
- body.light .sidebar {
- background: rgba(230,230,230,0.9);
- }
-
- .sidebar h3 {
- font-size: 13px;
- color: #777;
- margin-bottom: 5px;
- }
-
- .chat-item {
- background: #2a2a2a;
- height: 40px;
- border-radius: 8px;
- }
-
- body.light .chat-item {
- background: #bbb;
- }
-
- .chat {
- flex: 1;
- background: rgba(27,27,27,0.9);
- display: flex;
- flex-direction: column;
- }
-
- body.light .chat {
- background: rgba(255,255,255,0.9);
- }
-
- .chat-header {
- display: flex;
- align-items: center;
- justify-content: space-between;
- gap: 10px;
- padding: 10px 15px;
- border-bottom: 1px solid #333;
- background: rgba(16,16,16,0.9);
- font-weight: bold;
- }
-
- body.light .chat-header {
- background: rgba(245,245,245,0.9);
- border-bottom: 1px solid #ccc;
- }
-
- .chat-header-left {
- display: flex;
- align-items: center;
- gap: 10px;
- }
-
- .chat-header-left img {
- width: 36px;
- height: 36px;
- border-radius: 50%;
- }
-
- .settings-btn {
- background: none;
- border: none;
- cursor: pointer;
- }
-
- .settings-btn img {
- width: 24px;
- height: 24px;
- filter: invert(1);
- }
-
- body.light .settings-btn img {
- filter: invert(0);
- }
-
- .chat-body {
- flex: 1;
- padding: 20px;
- display: flex;
- flex-direction: column;
- gap: 10px;
- overflow-y: auto;
- scroll-behavior: smooth;
- }
-
- .message {
- max-width: 70%;
- background: #333;
- padding: 8px 12px;
- border-radius: 10px;
- font-size: 14px;
- word-wrap: break-word;
- }
-
- .message.user {
- align-self: flex-end;
- background: #444;
- }
-
- .message.bot {
- align-self: flex-start;
- background: #2d2d2d;
- color: #00d1ff;
- }
-
- body.light .message {
- background: #ddd;
- color: #000;
- }
-
- body.light .message.user {
- background: #ccc;
- }
-
- body.light .message.bot {
- background: #e0f6ff;
- color: #0077b6;
- }
-
- .chat-input {
- display: flex;
- align-items: center;
- padding: 10px;
- background: #101010;
- border-top: 1px solid #333;
- position: sticky;
- bottom: 0;
- }
-
- body.light .chat-input {
- background: #f2f2f2;
- border-top: 1px solid #ccc;
- }
-
- .chat-input input {
- flex: 1;
- background: #222;
- border: none;
- outline: none;
- color: white;
- padding: 10px;
- border-radius: 10px;
- }
-
- body.light .chat-input input {
- background: #fff;
- color: #111;
- }
-
- .chat-input button {
- background: #333;
- color: white;
- border: none;
- padding: 10px 15px;
- margin-left: 8px;
- border-radius: 8px;
- cursor: pointer;
- transition: 0.2s;
- }
-
- .chat-input button:hover {
- background: #555;
- }
-
- body.light .chat-input button {
- background: #ccc;
- color: #000;
- }
-
- body.light .chat-input button:hover {
- background: #bbb;
- }
-
- /* === Окно регистрации === */
- .auth-container {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba(0,0,0,0.9);
- display: flex;
- align-items: center;
- justify-content: center;
- z-index: 1000;
- }
-
- .auth-box {
- background: #222;
- padding: 30px;
- border-radius: 12px;
- width: 320px;
- display: flex;
- flex-direction: column;
- gap: 12px;
- box-shadow: 0 0 15px rgba(0,0,0,0.5);
- }
-
- .auth-box h2 {
- text-align: center;
- margin-bottom: 10px;
- }
-
- .auth-box input {
- background: #333;
- border: none;
- padding: 10px;
- color: white;
- border-radius: 8px;
- }
-
- .auth-box button {
- background: #00aaff;
- border: none;
- color: white;
- padding: 10px;
- border-radius: 8px;
- cursor: pointer;
- transition: 0.3s;
- }
-
- .auth-box button:hover {
- background: #0088cc;
- }
-
- .status {
- font-size: 13px;
- margin-top: -5px;
- }
- </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lingo</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
- <div class="topbar">LINGO</div>
+  <div class="topbar">LINGO</div>
 
- <div class="auth-container" id="authContainer">
-   <div class="auth-box">
-     <h2>Регистрация</h2>
-     <input type="text" id="username" placeholder="Имя пользователя">
-     <div class="status" id="userStatus"></div>
-     <input type="password" id="password" placeholder="Пароль">
-     <div class="status" id="passStatus"></div>
-     <button id="registerBtn">Зарегистрироваться</button>
-   </div>
- </div>
+  <div class="auth-container" id="authContainer">
+    <div class="auth-box">
+      <h2>Регистрация</h2>
+      <input type="text" id="username" placeholder="Имя пользователя" />
+      <div class="status" id="userStatus"></div>
+      <input type="password" id="password" placeholder="Пароль" />
+      <div class="status" id="passStatus"></div>
+      <button id="registerBtn">Зарегистрироваться</button>
+    </div>
+  </div>
 
- <div class="app" id="app" style="display:none;">
- <div class="sidebar">
- <h3>Группы</h3>
- <div class="chat-item"></div>
- <div class="chat-item"></div>
- <div class="chat-item"></div>
- <div class="chat-item"></div>
- </div>
+  <div class="app" id="app" style="display:none;">
+    <div class="sidebar">
+      <h3>Группы</h3>
+      <div class="chat-item"></div>
+      <div class="chat-item"></div>
+      <div class="chat-item"></div>
+      <div class="chat-item"></div>
+    </div>
 
- <div class="chat">
- <div class="chat-header">
- <div class="chat-header-left">
- <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
- Фигма Дигма Димаш Сигма
- </div>
- <button class="settings-btn" id="settingsBtn">
- <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" alt="⚙️">
- </button>
- </div>
+    <div class="chat">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="avatar" />
+        </div>
+        <button class="settings-btn" id="settingsBtn">
+          <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" alt="⚙️">
+        </button>
+      </div>
 
- <div class="chat-body" id="chatBody"></div>
+      <div class="chat-body" id="chatBody"></div>
 
- <div class="chat-input">
- <input type="text" id="messageInput" placeholder="Введите текст...">
- <button id="sendBtn">Отправить</button>
- </div>
- </div>
- </div>
+      <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Введите текст..." />
+        <button id="sendBtn">Отправить</button>
+      </div>
+    </div>
+  </div>
 
- <script>
- const input = document.getElementById('messageInput');
- const chatBody = document.getElementById('chatBody');
- const sendBtn = document.getElementById('sendBtn');
- const settingsBtn = document.getElementById('settingsBtn');
- const authContainer = document.getElementById('authContainer');
- const app = document.getElementById('app');
- const usernameInput = document.getElementById('username');
- const passwordInput = document.getElementById('password');
- const userStatus = document.getElementById('userStatus');
- const passStatus = document.getElementById('passStatus');
- const registerBtn = document.getElementById('registerBtn');
-
- const botReplies = [
- "Интересно… но не уверен, что понял 😅",
- "Хмм, звучит как баг 🤔",
- "Я — искусственный интеллект, а ты?",
- "Ошибка 404: смысл не найден",
- "Проверь синтаксис своих мыслей 💻",
- "Я думал ты программист, а не философ 🤖",
- "Впечатляюще, но где документация?",
- "Кажется, кто-то опять забыл закрыть скобку 😆"
- ];
-
- usernameInput.addEventListener('input', () => {
-   const users = JSON.parse(localStorage.getItem('lingoUsers')) || {};
-   const name = usernameInput.value.trim();
-   if (!name) {
-     userStatus.textContent = "";
-     return;
-   }
-   if (users[name]) {
-     userStatus.textContent = "Имя занято ❌";
-     userStatus.style.color = "red";
-   } else {
-     userStatus.textContent = "Имя свободно ✅";
-     userStatus.style.color = "lime";
-   }
- });
-
- passwordInput.addEventListener('input', () => {
-   const pass = passwordInput.value;
-   let score = 0;
-   if (pass.length >= 6) score++;
-   if (/[A-Z]/.test(pass)) score++;
-   if (/[0-9]/.test(pass)) score++;
-   if (/[^A-Za-z0-9]/.test(pass)) score++;
-
-   if (!pass) {
-     passStatus.textContent = "";
-   } else if (score <= 1) {
-     passStatus.textContent = "Слабый пароль";
-     passStatus.style.color = "red";
-   } else if (score === 2) {
-     passStatus.textContent = "Нормальный пароль";
-     passStatus.style.color = "orange";
-   } else {
-     passStatus.textContent = "Сложный пароль";
-     passStatus.style.color = "lime";
-   }
- });
-
- registerBtn.addEventListener('click', async () => {
-  const name = usernameInput.value.trim();
-  const pass = passwordInput.value;
-
-  if (!name || !pass) {
-    alert("Введите имя и пароль");
-    return;
-  }
-
-  try {
-    const response = await fetch('http://localhost:8080/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: name, email: pass }) // пока пароль хранится как email
-    });
-
-    if (response.ok) {
-      const user = await response.json();
-      console.log('✅ Пользователь создан:', user);
-      localStorage.setItem('currentUser', name);
-      authContainer.style.display = 'none';
-      app.style.display = 'flex';
-    } else {
-      alert('Ошибка при регистрации (пользователь, возможно, уже существует)');
-    }
-  } catch (err) {
-    console.error('Ошибка при отправке запроса:', err);
-    alert('Не удалось подключиться к серверу');
-  }
-});
-
-
- const currentUser = localStorage.getItem('currentUser');
- if (currentUser) {
-   authContainer.style.display = 'none';
-   app.style.display = 'flex';
- }
-
- const savedMessages = JSON.parse(localStorage.getItem('lingoMessages')) || [];
- savedMessages.forEach(msg => addMessage(msg.text, msg.sender));
-
- if (localStorage.getItem('lingoTheme') === 'light') {
- document.body.classList.add('light');
- }
-
- function addMessage(text, sender = 'user') {
- const msg = document.createElement('div');
- msg.classList.add('message');
- msg.classList.add(sender);
- msg.textContent = text;
- chatBody.appendChild(msg);
- chatBody.scrollTop = chatBody.scrollHeight;
- }
-
- function saveMessage(text, sender) {
- const messages = JSON.parse(localStorage.getItem('lingoMessages')) || [];
- messages.push({ text, sender });
- localStorage.setItem('lingoMessages', JSON.stringify(messages));
- }
-
- function sendMessage() {
- const text = input.value.trim();
- if (!text) return;
- addMessage(text, 'user');
- saveMessage(text, 'user');
- input.value = '';
-
- setTimeout(() => {
- const reply = botReplies[Math.floor(Math.random() * botReplies.length)];
- addMessage(reply, 'bot');
- saveMessage(reply, 'bot');
- }, 1000 + Math.random() * 1000);
- }
-
- sendBtn.addEventListener('click', sendMessage);
- input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-
- settingsBtn.addEventListener('click', () => {
- document.body.classList.toggle('light');
- const theme = document.body.classList.contains('light') ? 'light' : 'dark';
- localStorage.setItem('lingoTheme', theme);
- });
- </script>
+  <script src="functional.js"></script>
 </body>
 </html>
